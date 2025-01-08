@@ -116,7 +116,6 @@
 
             // Verifica se o status HTTP é válido (200-299)
             if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
             }
 
             const result = await response.json();
@@ -198,12 +197,13 @@
                         button.disabled = !allFilled;
                     });
             
-                    // Adiciona a funcionalidade de redirecionamento no clique do botão
-                    button.addEventListener('click', function () {
-                        window.location.href = 'pagina_destino.html';
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault(); // Impede o envio tradicional do formulário
+                        window.location.href = 'inicio.html'; // Redireciona para a página inicial
                     });
                 });
             </script>
+            
             
             <div class="link">
                 Já tem uma conta? <a href="login.html">Faça login!</a>

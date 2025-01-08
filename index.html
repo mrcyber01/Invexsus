@@ -3,220 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico de Velas com Rolagem Contínua</title>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <title>Registrar-se</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            background: linear-gradient(135deg, #1a1a1a, #121212); /* Fundo com gradiente moderno */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #f1f1f1;
+            font-family: 'Chakra Petch', sans-serif;
+            background: linear-gradient(135deg, #000000, #121213);
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
-        }
-
-        /* Cabeçalho */
-        .header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #282828, #1a1a1a); /* Cor de fundo moderna */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            margin: 20px;
-            position: fixed;
-            width: calc(100% - 40px); /* Cabeçalho fixo */
-            top: 0;
-            left: 0;
-            z-index: 10;
+            height: 100vh;
         }
 
-        .header .logo img {
-            height: 40px;
-            border-radius: 50%; /* Logo arredondada */
+        .login-container {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
         }
 
-        .header .saldo {
-            font-size: 20px;
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #9eb4c6;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-container input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #121212;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .login-container button {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #2196f3;
+            color: #fff;
+            font-size: 16px;
             font-weight: bold;
-            color: #00e676;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
         }
 
-        .header .wallet img {
-            height: 30px;
-            border-radius: 50%; /* Ícone da carteira arredondado */
+        .login-container button:hover {
+            background: #1e88e5;
         }
 
-        /* Ajuste do layout em telas pequenas */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                padding: 15px 20px;
-            }
-
-            .header .saldo {
-                margin-top: 10px;
-                font-size: 18px;
-            }
+        .error {
+            color: #f44336;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        /* Gráfico */
-        #chart {
-            width: 100%;
-            height: 450px;
-            border-radius: 15px;
-            margin-top: 100px; /* Ajuste para o cabeçalho fixo */
+        .link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #9eb4c6;
+            text-align: center;
         }
 
-        /* Estilo do gráfico */
-        .apexcharts-canvas {
-            border-radius: 15px;
-            background-color: #121212;
+        .link a {
+            color: #2196f3;
+            text-decoration: none;
         }
 
-        /* Estilos para animação das velas */
-        .apexcharts-candle-series .apexcharts-candle {
-            animation: fadeInUp 1s ease-in-out;
+        .link a:hover {
+            text-decoration: underline;
+        }
+        .logo-container {
+        margin-bottom: 10px; /* Espaçamento entre a logo e o card de login */
+        margin-top: -50px; /* Move a logo mais para cima */
         }
 
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .logo {
+            display: block;
+            margin: -80px;
+            margin-top: -110px;
+            max-width: 350px; /* Ajuste o tamanho da logo */
+            height: auto;
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault(); // Impede o envio tradicional do formulário
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('processar_cadastro.php', {
+                method: 'POST',
+                body: formData,
+            });
+
+            // Verifica se o status HTTP é válido (200-299)
+            if (!response.ok) {
+            }
+
+            const result = await response.json();
+
+            if (result.sucesso) {
+                // Redirecionar em caso de sucesso
+                window.location.href = result.redirect;
+            } else {
+                // Exibe o erro retornado pelo PHP
+                document.querySelector('.error').textContent = result.erro;
+            }
+        } catch (error) {
+            // Captura erros de rede ou JSON inválido
+            document.querySelector('.error').textContent = "Erro ao processar a solicitação.";
+            console.error("Detalhes do erro:", error);
+        }
+    });
+});
+
+
+    </script>
 </head>
 <body>
-
-    <!-- Cabeçalho com Logo, Saldo e Carteira -->
-    <div class="header">
-        <!-- Logo do Perfil (Lado esquerdo) -->
-        <div class="logo">
-            <img src="https://cdn.icon-icons.com/icons2/1709/PNG/512/user1_112358.png" alt="Logo do Perfil">
-        </div>
-
-        <!-- Saldo (Centro) -->
-        <div class="saldo">
-            Saldo: R$ 
-        </div>
-
-        <!-- Carteira (Lado direito) -->
-        <div class="wallet">
-            <img src="https://cdn-icons-png.flaticon.com/512/214/214362.png" alt="Carteira">
-        </div>
+    <div class="logo-container">
+        <img src="https://invexus.store/img/logo.png" alt="Logo" class="logo">
     </div>
+    <div class="login-container">
+        <h1>Registrar-se</h1>
+        <div class="error"></div>
+        <form method="POST">
+            <input type="text" name="nome" placeholder="Nome" required maxlength="25">
+             <input 
+                type="text" 
+                name="telefone" 
+                placeholder="Número de telefone" 
+                oninput="formatarNumero(this)" 
+                onblur="removerFormatacao(this)"
+                minlenght="10"
+                maxlength="11" 
+                required>
+            <input 
+                type="text" 
+                name="confirmar_numero" 
+                placeholder="Confirmar número" 
+                oninput="formatarNumero(this)" 
+                onblur="removerFormatacao(this)" 
+                minlenght="10"
+                maxlength="11" 
+                required>
+            <input 
+                type="password" 
+                name="senha" 
+                placeholder="Senha" 
+                minlenght="8"
+                maxlength="12" 
+                required>
+            <input 
+                type="password" 
+                name="confirmar_senha" 
+                placeholder="Confirmar senha" 
+                minlenght="8"
+                maxlength="12" 
+                required>
 
-    <!-- Gráfico -->
-    <div id="chart"></div>
+                <!-- Campo oculto para enviar o "ref" -->
+            <input type="hidden" name="ref" value="">
+            <button type="submit" id="cadastrar" disabled>Cadastrar</button>
 
-    <script>
-        // Função para gerar dados aleatórios para as velas
-        function generateRandomData(lastTime) {
-            const open = Math.floor(Math.random() * (120 - 100 + 1)) + 100;
-            const close = Math.floor(Math.random() * (120 - 100 + 1)) + 100;
-            const low = Math.min(open, close) - Math.floor(Math.random() * 5 + 1);
-            const high = Math.max(open, close) + Math.floor(Math.random() * 5 + 1);
-            const time = lastTime + 60 * 1000; // Incrementando o tempo em 1 minuto
-            return {
-                x: time,
-                y: [open, high, low, close]
-            };
-        }
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.querySelector('form');
+                    const button = document.getElementById('cadastrar');
+            
+                    form.addEventListener('input', function () {
+                        // Verifica se todos os campos obrigatórios estão preenchidos
+                        const allFilled = [...form.querySelectorAll('input[required]')].every(input => input.value.trim() !== '');
+                        
+                        // Habilita ou desabilita o botão
+                        button.disabled = !allFilled;
+                    });
+            
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault(); // Impede o envio tradicional do formulário
+                        window.location.href = 'inicio.html'; // Redireciona para a página inicial
+                    });
+                });
+            </script>
+            
+            
+            <div class="link">
+                Já tem uma conta? <a href="login.html">Faça login!</a>
+            </div>
+        </form>
+    </div>
+   <script>
+       function formatarNumero(element) {
+        element.value = element.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    }
 
-        // Dados iniciais
-        let data = [
-            { x: new Date('2024-12-23T09:00:00').getTime(), y: [100, 105, 95, 100] },
-            { x: new Date('2024-12-23T09:01:00').getTime(), y: [100, 110, 98, 105] },
-            { x: new Date('2024-12-23T09:02:00').getTime(), y: [105, 108, 100, 103] },
-            { x: new Date('2024-12-23T09:03:00').getTime(), y: [103, 112, 101, 107] },
-            { x: new Date('2024-12-23T09:04:00').getTime(), y: [107, 115, 105, 110] }
-        ];
-
-        // Configuração do gráfico
-        const options = {
-            chart: {
-                type: 'candlestick',
-                height: 500,
-                background: '#121212',
-                foreColor: '#fff',
-                toolbar: { show: false },
-                animations: {
-                    enabled: false,  // Desabilita a animação do gráfico
-                },
-                zoom: {
-                    enabled: false  // Desabilita o zoom
-                },
-            },
-            series: [{ data: data }],
-            xaxis: {
-                type: 'datetime',
-                labels: { style: { colors: '#fff' } },
-                tickAmount: 25,  // Exibindo 25 velas
-                title: {
-                    text: 'Tempo',
-                    style: { color: '#fff' }
-                },
-                min: data[0].x,
-                max: data[data.length - 1].x + 60 * 1000 * 10, // Espaço para novas velas
-                range: 60 * 1000 * 25 // Exibindo o gráfico por 25 velas
-            },
-            yaxis: {
-                labels: { style: { colors: '#fff' } },
-                title: {
-                    text: 'Preço',
-                    style: { color: '#fff' }
-                }
-            },
-            tooltip: {
-                theme: 'dark',
-            },
-            plotOptions: {
-                candlestick: {
-                    colors: {
-                        upward: '#00e676',   // Velas verdes mais suaves
-                        downward: '#ff3d3d'   // Velas vermelhas mais fortes
-                    }
-                }
-            }
-        };
-
-        // Inicialização do gráfico
-        const chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-
-        // Função para adicionar novas velas de forma contínua e remover as antigas
-        let lastTime = data[data.length - 1].x;
-        setInterval(() => {
-            const newData = generateRandomData(lastTime);
-            lastTime = newData.x;
-            data.push(newData);  // Adiciona o novo dado
-
-            // Remove a primeira vela (a mais à esquerda) para não sobrecarregar o gráfico
-            if (data.length > 25) {
-                data.shift();
-            }
-
-            // Atualiza o gráfico com as novas velas
-            chart.updateSeries([{ data: data }]);
-
-            // Mantém um espaço vazio à direita (10 velas)
-            chart.updateOptions({
-                xaxis: {
-                    max: data[data.length - 1].x + 60 * 1000 * 10 // Adiciona espaço para as próximas velas
-                }
-            });
-        }, 1000); // Gerando novas velas a cada 1 segundo
+    function removerFormatacao(element) {
+        // Caso queira apenas limpar ou validar algo ao sair do campo, insira aqui
+        element.value = element.value.replace(/\D/g, ''); // Garante que só números fiquem
+    }
     </script>
 
 </body>

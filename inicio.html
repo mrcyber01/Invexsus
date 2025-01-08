@@ -1,0 +1,1486 @@
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a1a1a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+
+    <title>Invexus Mobile App</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            height: auto !important;
+            width: 100%;
+            font-size: 16px;
+            background: linear-gradient(135deg, #000000, #121213); /* Degradê suave */
+            color: #e0e0e0;
+            overflow-x: hidden;
+            overflow: visible !important;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+        .container {
+            min-height: 100vh;
+            max-width: 100%;
+            padding-bottom: 70px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #0E0E0E;
+            color: #B8B8BD;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+            position: sticky;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            padding-bottom: 1rem;
+            overflow-y: auto;
+            overflow: visible !important;
+            -webkit-overflow-scrolling: touch;
+        }
+        .welcome-section {
+            text-align: left; /* Alinhar tudo à esquerda */
+            margin-bottom: 20px;
+            position: relative; /* O contêiner pai controla a posição do ícone */
+        }
+        .balance-container {
+            display: flex;
+            flex-direction: column; /* Garantir que o texto fique empilhado */
+            align-items: flex-start; /* Alinhar à esquerda */
+        }
+        .balance {
+            font-size: 2rem;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+        .income {
+            background-color: #0E0E0E;
+            color: #B8B8BD;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;    
+        }
+
+        .welcome-message {
+            font-size: 1.2rem; /* Ajuste do tamanho do nome */
+            color: #9eb4c6;
+            margin-bottom: 5px; /* Espaçamento entre nome e saldo */
+        }
+
+        .action-buttons {
+            display: grid;            
+            gap: 1rem;
+            margin-bottom: 2rem;
+          
+        }
+        .action-button {
+            background-color: #1e1e1e;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .action-button:hover {
+            background-color: #333333; /* Efeito hover */
+        }
+
+        .withdraw {
+            text-decoration: none;
+           
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-icon img {
+            width: 40px; /* Tamanho do ícone */
+            height: auto;
+            margin-bottom: 8px; /* Espaço entre ícone e texto */
+            
+            /* Define a cor #4A90E2 */
+            filter: brightness(0) saturate(100%) invert(58%) sepia(16%) saturate(2164%) hue-rotate(162deg) brightness(95%) contrast(95%);
+            
+            /* Remove box-shadow */
+            box-shadow: none;
+        }
+        
+        .action-text {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .banner-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .banner-image.active {
+            opacity: 1;
+        }
+        .products-grid {
+            overflow-x: auto; /* Permite rolagem horizontal */
+            white-space: nowrap; /* Evita quebras de linha */
+            scroll-behavior: smooth; /* Suaviza a rolagem */
+            display: flex; /* Garante layout flexível para os itens */
+            gap: 16px; /* Espaçamento entre os cards */
+            padding: 16px; /* Margem interna para o contêiner */
+            transition: transform 0.5s ease; /* Animação suave ao mover */
+            width: max-content; /* Garante que o grid se expanda para acomodar todos os cards */
+        }
+        .carousel-wrapper {
+            display: flex;
+            gap: 16px; /* Espaçamento entre os itens */
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* Esconde os produtos fora da tela */
+        }
+
+        .product-card {
+            flex: 0 0 auto; /* Largura fixa para cada card */
+            height: 500px;
+            width: 300px;
+            background: #0E0E0E;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 2rem; /* Ajuste conforme necessário */
+            line-height: 1;
+            color: white;
+            display: inline-block;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .carousel-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        /* Botão Esquerda */
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        /* Botão Direita */
+        .carousel-button.next {
+            right: 10px;
+        }
+
+        /* Hover nos botões */
+        .carousel-button:hover .material-symbols-outlined {
+            color: #ffff; /* Cor ao passar o mouse */
+        }
+
+        /* Setas desativadas (transparência) */
+        .carousel-button[style*="opacity: 0.3"] {
+            cursor: default; /* Remove o ponteiro de clique */
+        }
+
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            image-rendering: auto;
+            image-rendering: smooth;
+            image-rendering: optimizeQuality;
+        }
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #B8B8BD;
+        }
+
+        .product-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .product-income {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            color: #B8B8BD;
+        }
+        .buy-button {
+            background-color: #4CAF50;
+            color: #1a1a1a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+            font-weight: bold;
+        }
+        .buy-button:hover {
+            background-color: #45a049;
+        }
+        nav {
+            background-color: #0E0E0E;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            z-index: 9999; /* Alta prioridade para sobrepor outros elementos */
+        }
+        .nav-item {
+            text-decoration: none;
+            color: #a0a0a0;
+            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-item.active {
+            color: #B8B8BD;
+            text-shadow: 
+                0 0 1px #B8B8BD, /* Luz suave mais próxima */
+                0 0 1px #B8B8BD, /* Luz intermediária */
+                0 0 2px #B8B8BD, /* Luz secundária mais fraca */
+                0 0 2px #B8B8BD; /* Brilho mais distante e transparente */
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        nav a {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; /* Evita seleção de texto */
+        }
+
+        nav a:focus {
+            outline: none;
+            box-shadow: none; /* Remove qualquer sombra ou contorno no foco */
+        }
+
+        nav a:active {
+            outline: none;
+            background-color: transparent; /* Remove qualquer alteração visual ao clicar */
+        }
+        .telegram-icon {
+        font-size: 2.5rem; /* Tamanho do avião */
+        color: #ffffff; /* Cor do avião */
+        background-color: #0088cc; /* Cor azul de fundo */
+        border-radius: 50%; /* Garante um círculo perfeito */
+        padding: 7px; /* Ajusta o espaçamento interno */
+        display: flex; /* Centraliza o conteúdo */
+        align-items: center; /* Centraliza verticalmente */
+        justify-content: center; /* Centraliza horizontalmente */
+        animation: spin 2s linear infinite; /* Mantém a animação de rotação */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra sutil para destaque */
+
+        }
+
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .icon-container {
+            position: absolute; /* Permite posicionamento absoluto */
+            top: 0px; /* Ajusta a distância do topo */
+            right: 10px; /* Ajusta a distância da direita */
+            z-index: 10; /* Garante que o ícone esteja acima de outros elementos */
+        }
+        #fullscreen-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(76, 175, 80, 0.2);
+            border: none;
+            color: #4CAF50;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .fullscreen-mode {
+            background-color: #1a1a1a;
+            width: 100vw;
+            height: 100vh;
+        }
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            color: #4CAF50;
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+        .product-validity {
+            font-size: 0.8rem;
+            color: #4CAF50;
+            margin: 0.25rem 0;
+        }
+        .product-team-income {
+            background-color: transparent; /* Remove o fundo branco */
+            color: #ffffff; /* Ajuste a cor do texto para algo visível */
+            padding: 10px; /* Opcional: ajuste o espaçamento interno */
+            border: none; /* Remove qualquer borda */
+            box-shadow: none; /* Remove sombras, se existirem */
+            margin-bottom: !important;
+        }
+
+        .product-team-income ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .product-team-income li {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        /* Clean and Cool Pop-up Style */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Fundo escurecido, discreto */
+            z-index: 1000;
+        }
+        
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1b1f2f; /* Azul frio escuro */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            color: white;
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #ccc; /* Cinza claro */
+            transition: color 0.3s ease;
+        }
+        .popup-close:hover {
+            color: white;
+        }
+        
+        .popup-title {
+            font-size: 1.4em;
+            font-family: 'Poppins', sans-serif;
+            color: #a3c4f3; /* Azul frio claro */
+            margin-bottom: 15px;
+        }
+        
+        .popup-message {
+            font-size: 0.95em;
+            font-family: 'Montserrat', sans-serif;
+            color: #d4d4d4; /* Cinza claro */
+            margin-bottom: 20px;
+        }
+        
+        .popup-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .popup-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #a3c4f3; /* Azul frio claro */
+            transition: transform 0.2s ease, color 0.3s ease;
+        }
+        .popup-link:hover {
+            transform: scale(1.05);
+            color: #d4d4d4; /* Cinza claro no hover */
+        }
+        .popup-link i {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        
+        .popup-button {
+            background: #344866; /* Azul frio médio */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .popup-button:hover {
+            background: #2c3c56; /* Azul frio mais escuro */
+        }
+
+        .card {
+            position: relative; /* Define o contexto do posicionamento */
+            }
+
+       /* Estilo do Card 1 */
+        .card-1 {
+            background-color: #2b2b2b; /* Fundo cinza escuro */
+            color: #9eb4c6; /* Texto branco */
+        }
+
+        .card-1 .buy-button {
+            background-color: #9eb4c6; /* Verde neutro */
+            color: #2b2b2b; /* Texto branco */
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-1 .buy-button:hover {
+            background-color: #c3d1e0; /* Verde mais escuro no hover */
+        }
+
+        /* Estilo do Card 2 */
+        .card-2 {
+            background-color: #3a3a3a; /* Fundo cinza médio */
+            color: #ffffff; /* Texto branco */
+        }
+
+        .card-2 .buy-button {
+            background-color: #2196f3; /* Azul neutro */
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-2 .buy-button:hover {
+            background-color: #1976d2; /* Azul mais escuro no hover */
+        }
+
+        /* Estilo do Card 3 */
+        .card-3 {
+            background-color: #2b2b2b; /* Fundo cinza escuro */
+            color: #ffffff; /* Texto branco */
+        }
+
+        .card-3 .buy-button {
+            background-color: #ff9800b8; /* Laranja neutro */
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-3 .buy-button:hover {
+            background-color: #e68900; /* Laranja mais escuro no hover */
+        }
+
+        /* Estilo do Card 4 */
+        .card-4 {
+            background-color: #3a3a3a; /* Fundo cinza médio */
+            color: #ffffff; /* Texto branco */
+        }
+
+        .card-4 .buy-button {
+            background-color: #ff0b68; /* Roxo neutro */
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-4 .buy-button:hover {
+            background-color: #7b1fa2; /* Roxo mais escuro no hover */
+        }
+
+        /* Estilo do Card 5 */
+        .card-5 {
+            background-color: #2b2b2b; /* Fundo cinza escuro */
+            color: #ffffff; /* Texto branco */
+        }
+
+        .card-5 .buy-button {
+            background-color: #f44336; /* Vermelho neutro */
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-5 .buy-button:hover {
+            background-color: #d32f2f; /* Vermelho mais escuro no hover */
+        }
+
+        /* Estilo do Card 6 */
+        .card-6 {
+            background-color: #3a3a3a; /* Fundo cinza médio */
+            color: #ffffff; /* Texto branco */
+        }
+
+        .card-6 .buy-button {
+            background-color: #607d8b; /* Azul acinzentado */
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .card-6 .buy-button:hover {
+            background-color: #455a64; /* Azul acinzentado mais escuro no hover */
+        }
+
+        /* Estilo do Card 1 */
+        .card-1 .product-price {
+            color: #9eb4c6; /* Mesma cor do botão no card 1 */
+            font-weight: bold;
+        }
+
+        /* Estilo do Card 2 */
+        .card-2 .product-price {
+            color: #2196f3; /* Mesma cor do botão no card 2 */
+            font-weight: bold;
+        }
+
+        /* Estilo do Card 3 */
+        .card-3 .product-price {
+            color: #ff9800b8; /* Mesma cor do botão no card 3 */
+            font-weight: bold;
+        }
+
+        /* Estilo do Card 4 */
+        .card-4 .product-price {
+            color: #ff0b68; /* Mesma cor do botão no card 4 */
+            font-weight: bold;
+        }
+
+        /* Estilo do Card 5 */
+        .card-5 .product-price {
+            color: #f44336; /* Mesma cor do botão no card 5 */
+            font-weight: bold;
+        }
+
+        /* Estilo do Card 6 */
+        .card-6 .product-price {
+            color: #afe5ff; /* Mesma cor do botão no card 6 */
+            font-weight: bold;
+        }
+
+        /* Título do Card 1 */
+        .card-1 .product-title {
+            color: #9eb4c6; /* Mesma cor do botão e da seção product-price */
+            font-weight: bold;
+        }
+
+        /* Título do Card 2 */
+        .card-2 .product-title {
+            color: #2196f3; /* Mesma cor do botão e da seção product-price */
+            font-weight: bold;
+        }
+
+        /* Título do Card 3 */
+        .card-3 .product-title {
+            color: #ff9800b8; /* Mesma cor do botão e da seção product-price */
+            font-weight: bold;
+        }
+
+        /* Título do Card 4 */
+        .card-4 .product-title {
+            color: #ff0b68; /* Cor mais avermelhada ajustada */
+            font-weight: bold;
+        }
+
+        /* Título do Card 5 */
+        .card-5 .product-title {
+            color: #f44336; /* Mesma cor do botão e da seção product-price */
+            font-weight: bold;
+        }
+
+        /* Título do Card 6 */
+        .card-6 .product-title {
+            color: #afe5ff; /* Mesma cor do botão e da seção product-price */
+            font-weight: bold;
+        }
+
+
+            .info-popup {
+            display: none; /* Esconde por padrão */
+            position: absolute; /* Faz o popup ser posicionado relativo ao card */
+            top: -180%; /* Move o popup mais acima */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translate(-50%, 0); /* Ajusta a centralização */
+            background-color: rgba(34, 34, 34, 1); /* Fundo escuro restaurado */
+            color: #ffffff; /* Texto branco */
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 9999;
+            width: 90%; /* Ajuste conforme necessário */
+            max-width: 300px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adiciona uma leve sombra */
+            }
+
+            .info-popup-content {
+            color: #fff;
+            text-align: center;
+            }
+
+            .info-popup-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            color: #ffffff; /* Mantém o botão de fechar branco */
+            font-size: 18px;
+            }
+
+        .info-popup h3 {
+            font-size: 1.2em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            word-wrap: break-word; /* Garante quebra de palavras longas */
+            word-break: break-word; /* Garante que palavras grandes sejam quebradas */
+            white-space: normal; /* Permite múltiplas linhas de texto */
+            text-align: center; /* Centraliza o título */
+        }
+
+        .info-popup p {
+            font-size: 0.9rem; /* Tamanho do texto */
+            line-height: 1.6; /* Aumenta o espaçamento entre linhas */
+            word-spacing: 0.1rem; /* Adiciona espaçamento uniforme entre palavras */
+            letter-spacing: 0.05rem; /* Ajusta o espaçamento entre letras */
+            text-align: justify; /* Alinha o texto de forma uniforme */
+            margin-bottom: 0;
+            color: #e0e0e0; /* Tom suave de branco para o texto */
+            word-wrap: break-word; /* Garante a quebra automática de palavras */
+            overflow-wrap: break-word; /* Compatibilidade adicional */
+            white-space: normal; /* Permite múltiplas linhas */
+        }
+
+        /* Remove a seleção azul ao clicar */
+        a, button {
+            outline: none; /* Remove o contorno */
+            -webkit-tap-highlight-color: transparent; /* Remove o destaque azul no clique */
+            user-select: none; /* Evita a seleção de texto ao clicar */
+        }
+
+        /* Estilo para o container da seção "Quem Somos" */
+        .quem-somos {
+            margin: 20px auto; /* Centraliza e dá espaçamento em cima e embaixo */
+            padding: 20px; /* Espaçamento interno */
+            background-color: #2b2b2b; /* Fundo cinza escuro para contraste */
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombra suave */
+            color: #ffffff; /* Texto branco */
+            max-width: 800px; /* Limita a largura */
+            text-align: left; /* Alinha o texto à esquerda */
+        }
+
+        /* Estilo para o título */
+        .quem-somos h2 {
+            font-size: 1.4rem; /* Tamanho do título */
+            font-weight: bold; /* Negrito no título */
+            margin-bottom: 15px; /* Espaçamento abaixo do título */
+            color: #9eb4c6; /* Azul acinzentado */
+            text-align: center; /* Centraliza o título */
+        }
+
+        /* Estilo para os parágrafos */
+        .quem-somos p {
+            font-size: 1rem; /* Tamanho do texto */
+            line-height: 1.6; /* Altura entre as linhas para melhor legibilidade */
+            margin-bottom: 15px; /* Espaçamento entre os parágrafos */
+            color: #cccccc; /* Cinza claro para suavidade */
+        }
+
+        /* Estilo para o texto em negrito dentro do parágrafo */
+        .quem-somos strong {
+            color: #9eb4c6; /* Azul acinzentado destacado */
+            font-weight: bold; /* Negrito */
+        }
+
+        /* Estilo para o texto final destacado */
+        .quem-somos p:last-child {
+            text-align: center; /* Centraliza o último parágrafo */
+            font-size: 1.1rem; /* Aumenta o tamanho */
+            color: #ffffff; /* Texto branco */
+            font-weight: bold; /* Deixa em negrito */
+        }
+
+     /* Container do título animado */
+        .titulo-animado {
+            display: flex;
+            align-items: center; /* Alinha verticalmente */
+            justify-content: center; /* Alinha horizontalmente */
+            margin: 20px 0; /* Espaçamento entre as seções */
+            gap: 10px; /* Espaçamento entre as setas e o título */
+        }
+
+        /* Título com neon reduzido e transição suave */
+        .titulo-neon {
+            font-size: 1.3rem; /* Tamanho fixo do título */
+            font-weight: bold; /* Texto em negrito */
+            color: #9eb4c6; /* Cor fixa do texto */
+            text-shadow: 
+                0 0 1px #9eb4c6,  /* Brilho mínimo próximo */
+                0 0 2px #9eb4c6,  /* Brilho muito reduzido */
+                0 0 4px #34576e; /* Redução quase total do brilho do terceiro plano */
+            animation: pulsarNeon 2.5s infinite ease-in-out; /* Animação contínua e suave */
+        }
+
+        /* Animação do neon */
+        @keyframes pulsarNeon {
+            0% {
+                text-shadow: 
+                    0 0 1px #9eb4c6, 
+                    0 0 2px #9eb4c6, 
+                    0 0 4px #34576e;
+            }
+            25% {
+                text-shadow: 
+                    0 0 1.5px #9eb4c6, 
+                    0 0 3px #9eb4c6, 
+                    0 0 5px #34576e;
+            }
+            50% {
+                text-shadow: 
+                    0 0 2px #9eb4c6, 
+                    0 0 5px #9eb4c6, 
+                    0 0 6px #34576e;
+            }
+            75% {
+                text-shadow: 
+                    0 0 1.5px #9eb4c6, 
+                    0 0 3px #9eb4c6, 
+                    0 0 5px #34576e;
+            }
+            100% {
+                text-shadow: 
+                    0 0 1px #9eb4c6, 
+                    0 0 2px #9eb4c6, 
+                    0 0 4px #34576e;
+            }
+        }
+
+        /* Setas antes e depois */
+        .titulo-animado .seta-antes,
+        .titulo-animado .seta-depois {
+            font-size: 2.5rem; /* Tamanho das setas */
+            color: #9eb4c6; /* Cor das setas */
+            animation: bounce 1.5s infinite ease-in-out; /* Animação de pular */
+        }
+
+        /* Animação das setas */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="fullscreen-container">
+        <header>
+            Invexus
+        </header>
+
+        <main>
+            <div class="welcome-section">
+                <p class="welcome-message">Olá, Mr_Cyber!</p>
+                <div class="balance-container">
+                    <div class="balance" id="saldo-atual">
+                        R$ 0,00                    </div>
+                    <div class="income" id="rendimento-diario">
+                        Renda de hoje: R$ 0,00                    </div>
+                </div>
+                <div class="icon-container">
+                    <a href="https://t.me/invexusdiscussaoofc" target="_blank" style="text-decoration: none;">
+                        <div class="telegram-icon">
+                            <i class="fab fa-telegram"></i> <!-- Ícone Oficial do Telegram -->
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="action-buttons">
+                <a id="invest-button" class="action-button deposit">
+                    <div class="action-icon">
+                        <i class="fas fa-coins stat-icon"></i>
+                    </div>
+                    <div class="action-content">
+                        <div class="action-text">Investir</div>
+                        
+                    </div>
+                </a>
+                
+            </div>
+
+            <div class="banner">
+                <img src="https://invexus.store/img/universo.gif" alt="Banner 1" class="banner-image active" id="bannerGif">
+            </div>
+
+            <div class="quem-somos">
+                <h2>Invexus - Quem somos</h2>
+                <p>
+                    A Invexus nasceu da união entre inovação, tecnologia e uma visão clara:
+                    democratizar e tornar mais acessível o universo dos investimentos.
+                    Inspirados pelo nome que combina "inv", de investimento, com "exus",
+                    remetendo a excelência e progresso, nossa missão é proporcionar uma
+                    experiência intuitiva e eficiente para investidores de todos os níveis.
+                </p>
+                <p>
+                    Nossa jornada começou com um propósito simples, mas poderoso:
+                    empoderar pessoas com as ferramentas e o conhecimento necessário
+                    para gerenciar seus recursos financeiros de forma estratégica e consciente.
+                    Sabemos que o mundo dos investimentos pode parecer complexo e distante,
+                    mas acreditamos que, com as tecnologias certas e um design centrado no
+                    usuário, é possível transformar desafios em oportunidades.
+                </p>
+                <p>
+                    Na Invexus, nos preocupamos em oferecer uma plataforma que combine
+                    inteligência de dados, interfaces modernas e personalizáveis, além de
+                    conteúdos educativos para ajudar você a tomar decisões informadas.
+                    Valorizamos a segurança, a transparência e a experiência do cliente,
+                    buscando ser um guia confiável para quem deseja alcançar seus objetivos financeiros.
+                </p>
+                <p>
+                    Somos mais do que uma ferramenta; somos parceiros na sua jornada rumo
+                    ao crescimento. Seja você um iniciante ou um investidor experiente, a Invexus
+                    está aqui para simplificar, conectar e potencializar suas estratégias,
+                    mostrando que investir pode ser tão acessível quanto navegar pela internet.
+                </p>
+                <p>
+                    <strong>Invista com confiança. Invista com Invexus.</strong>
+                </p>
+            </div>
+
+            <div class="titulo-animado">
+                <i class="fa-solid fa-angle-down seta-antes"></i> <!-- Seta antes -->
+                <h2 class="titulo-neon">Conheça nossos planos</h2>
+                <i class="fa-solid fa-angle-down seta-depois"></i> <!-- Seta depois -->
+            </div>
+
+
+            <div class="carousel-container">
+                <button class="carousel-button prev">
+                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                </button>
+                <div class="products-grid">
+                                                                        <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-1">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733858498_Invexus1.png" 
+                                            alt="Invexus Start" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Start                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$20,00/diários</span>
+                                        <span>Total bruto: R$200,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 10 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$100,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="no-rendimentos">Sem rendimentos</p>                                </div>
+                                <a href="pix-payment.php?produto_id=1&valor=100&duracao=10" class="buy-button">+ Investir</a>
+                            </div>
+                                                    <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-2">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733871586_Invexus2%20(2).png" 
+                                            alt="Invexus Advance" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Advance                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$30,00/diários</span>
+                                        <span>Total bruto: R$450,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 15 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$200,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul><li>Nível 1: 5%</li><li>Nível 2: 3%</li><li>Nível 3: 2%</li></ul>                                </div>
+                                <a href="pix-payment.php?produto_id=2&valor=200&duracao=15" class="buy-button">+ Investir</a>
+                            </div>
+                                                    <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-3">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733871371_Invexus3.png" 
+                                            alt="Invexus Prime" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Prime                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$60,00/diários</span>
+                                        <span>Total bruto: R$1.200,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 20 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$500,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul><li>Nível 1: 10%</li><li>Nível 2: 5%</li><li>Nível 3: 3%</li><li>Nível 4: 2%</li></ul>                                </div>
+                                <a href="pix-payment.php?produto_id=6&valor=500&duracao=20" class="buy-button">+ Investir</a>
+                            </div>
+                                                    <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-4">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733871476_Invexus4.png" 
+                                            alt="Invexus Elite" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Elite                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$100,00/diários</span>
+                                        <span>Total bruto: R$2.500,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 25 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$1.000,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul><li>Nível 1: 15%</li><li>Nível 2: 10%</li><li>Nível 3: 5%</li><li>Nível 4: 3%</li><li>Nível 5: 2%</li></ul>                                </div>
+                                <a href="pix-payment.php?produto_id=7&valor=1000&duracao=25" class="buy-button">+ Investir</a>
+                            </div>
+                                                    <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-5">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733871732_Invexus5.png" 
+                                            alt="Invexus Prodigy" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Prodigy                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$200,00/diários</span>
+                                        <span>Total bruto: R$6.000,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 30 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$2.500,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul><li>Nível 1: 20%</li><li>Nível 2: 15%</li><li>Nível 3: 10%</li><li>Nível 4: 5%</li><li>Nível 5: 3%</li></ul>                                </div>
+                                <a href="pix-payment.php?produto_id=8&valor=2500&duracao=30" class="buy-button">+ Investir</a>
+                            </div>
+                                                    <!-- Gerando classes dinâmicas para os cards -->
+                            <div class="product-card card-6">
+                                <div class="product-image-container">
+                                                                            <img src="https://invexus.store/img/1733871840_Invexus6.png" 
+                                            alt="Invexus Legacy" 
+                                            class="product-image">
+                                                                    </div>
+                                <div class="product-details">
+                                                                    <div class="product-title">
+                                        Invexus Legacy                                    </div>
+                                    
+
+                                    <div class="product-income">
+                                        <span>Rendimento: R$320,00/diários</span>
+                                        <span>Total bruto: R$9.600,00</span>
+                                    </div>
+                                    <div class="product-validity">
+                                        Validade: 30 dias
+                                    </div>
+                                    <div class="product-price">
+                                        Investimento: R$4.500,00                                    </div>
+                                    
+                                </div>
+                                <div class="card">
+                                    <div class="product-team-income">
+                                        <strong>Rendimentos de Equipe:</strong>
+                                        <i class="fa fa-question-circle info-icon" aria-hidden="true" onclick="showInfoPopup(this)"></i>
+                                        <!-- Popup exclusivo para o card -->
+                                        <div class="info-popup">
+                                            <div class="info-popup-content">
+                                                <span class="info-popup-close" onclick="closeInfoPopup(this)">&times;</span>
+                                                <h3>O que são rendimentos de equipe?</h3>
+                                                <p>
+                                                    Disponíveis à partir do plano Advance, os rendimentos de equipe representam comissões obtidas com base nos rendimentos diários dos afiliados cadastrados sob sua indicação.
+                                                </p>
+                                                <p>
+                                                    Exemplo: Se um indicado no seu 1º nível receber um rendimento diário no valor de R$60, e seu rendimento de equipe no 1º nível for de 10%, sua comissão sob o rendimento dele será de R$6, todos os dias.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul><li>Nível 1: 25%</li><li>Nível 2: 20%</li><li>Nível 3: 15%</li><li>Nível 4: 10%</li><li>Nível 5: 5%</li></ul>                                </div>
+                                <a href="pix-payment.php?produto_id=12&valor=4500&duracao=30" class="buy-button">+ Investir</a>
+                            </div>
+                                                            </div>
+                <button class="carousel-button next">
+                    <span class="material-symbols-outlined">arrow_forward_ios</span>
+                </button>
+            </div>
+
+
+        </main>
+
+        <nav>
+            <a href="" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="produtos.html" class="nav-item">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Produto</span>
+            </a>
+            <a href="equipe.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Equipe</span>
+            </a>
+            <a href="perfil.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+        </nav>
+    </div>
+
+   <!-- Updated Sophisticated Pop-up -->
+    <div id="loginPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="popup-close" onclick="closePopup()">&times;</span>
+            <h2 class="popup-title">Bem-vindo à Invexus!</h2>
+            <p class="popup-message">
+                Multiplique seu capital com rendimentos diários e potencialize seus ganhos com a força da sua equipe. Invista no futuro, hoje!
+            </p>
+            <div class="popup-links">
+                <a href="https://t.me/invexuslcmt" class="popup-link" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <span>Canal Oficial</span>
+                </a>
+                <a href="https://t.me/suporteinvexus" class="popup-link" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <span>Suporte</span>
+                </a>
+            </div>
+            <button class="popup-button" onclick="closePopup()">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loading = document.getElementById('loading');
+            
+            // Verificar se é um novo login
+            const isNewLogin = false;
+            if (isNewLogin) {
+                showPopup();
+                // Limpar a flag de novo login
+                fetch('/clear_new_login.php', { method: 'POST', credentials: 'include' });
+            }
+
+            // Funcionalidade de tela cheia
+            const fullscreenButton = document.getElementById('fullscreen-button');
+            const fullscreenContainer = document.getElementById('fullscreen-container');
+
+            if (fullscreenButton && fullscreenContainer) {
+                fullscreenButton.addEventListener('click', toggleFullscreen);
+
+                function toggleFullscreen() {
+                    if (!document.fullscreenElement) {
+                        if (fullscreenContainer.requestFullscreen) {
+                            fullscreenContainer.requestFullscreen();
+                        } else if (fullscreenContainer.mozRequestFullScreen) { // Firefox
+                            fullscreenContainer.mozRequestFullScreen();
+                        } else if (fullscreenContainer.webkitRequestFullscreen) { // Chrome, Safari e Opera
+                            fullscreenContainer.webkitRequestFullscreen();
+                        } else if (fullscreenContainer.msRequestFullscreen) { // IE/Edge
+                            fullscreenContainer.msRequestFullscreen();
+                        }
+                        fullscreenButton.textContent = 'Sair da Tela Cheia';
+                        fullscreenContainer.classList.add('fullscreen-mode');
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.mozCancelFullScreen) { // Firefox
+                            document.mozCancelFullScreen();
+                        } else if (document.webkitExitFullscreen) { // Chrome, Safari e Opera
+                            document.webkitExitFullscreen();
+                        } else if (document.msExitFullscreen) { // IE/Edge
+                            document.msExitFullscreen();
+                        }
+                        fullscreenButton.textContent = 'Tela Cheia';
+                        fullscreenContainer.classList.remove('fullscreen-mode');
+                    }
+                }
+
+                // Manter o botão de tela cheia atualizado
+                document.addEventListener('fullscreenchange', updateFullscreenButton);
+                document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+                document.addEventListener('mozfullscreenchange', updateFullscreenButton);
+                document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+
+                function updateFullscreenButton() {
+                    if (document.fullscreenElement) {
+                        fullscreenButton.textContent = 'Sair da Tela Cheia';
+                        fullscreenContainer.classList.add('fullscreen-mode');
+                    } else {
+                        fullscreenButton.textContent = 'Tela Cheia';
+                        fullscreenContainer.classList.remove('fullscreen-mode');
+                    }
+                }
+            }
+        });
+
+        function showPopup() {
+            document.getElementById('loginPopup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('loginPopup').style.display = 'none';
+        }
+    </script>
+    <script>
+        const carousel = document.querySelector('.products-grid');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+
+        // Inicialização
+        let scrollPosition = 0;
+        const cards = document.querySelectorAll('.product-card');
+        const cardWidth = cards[0].offsetWidth; // Largura de um card
+        const gap = 16; // Espaçamento entre os cards
+        const visibleArea = carousel.parentElement.offsetWidth; // Largura visível do carrossel
+        const totalScrollWidth = cards.length * (cardWidth + gap); // Largura total do carrossel
+        const maxScroll = totalScrollWidth - visibleArea; // Máximo deslocamento possível
+
+        // Atualiza o estado das setas
+        function updateArrowVisibility() {
+            if (scrollPosition <= 0) {
+                prevButton.style.opacity = 0.3; // Deixa transparente
+                prevButton.style.pointerEvents = 'none'; // Desativa clique
+            } else {
+                prevButton.style.opacity = 1; // Ativa
+                prevButton.style.pointerEvents = 'auto'; // Reativa clique
+            }
+
+            if (scrollPosition >= maxScroll) {
+                nextButton.style.opacity = 0.3; // Deixa transparente
+                nextButton.style.pointerEvents = 'none'; // Desativa clique
+            } else {
+                nextButton.style.opacity = 1; // Ativa
+                nextButton.style.pointerEvents = 'auto'; // Reativa clique
+            }
+        }
+
+        // Evento ao clicar no botão "Próximo"
+        nextButton.addEventListener('click', () => {
+            scrollPosition += cardWidth + gap;
+            if (scrollPosition > maxScroll) scrollPosition = maxScroll; // Limita ao último card
+            carousel.style.transform = `translateX(-${scrollPosition}px)`;
+            updateArrowVisibility(); // Atualiza as setas
+        });
+
+        // Evento ao clicar no botão "Anterior"
+        prevButton.addEventListener('click', () => {
+            scrollPosition -= cardWidth + gap;
+            if (scrollPosition < 0) scrollPosition = 0; // Limita ao primeiro card
+            carousel.style.transform = `translateX(-${scrollPosition}px)`;
+            updateArrowVisibility(); // Atualiza as setas
+        });
+
+        // Inicializa as setas no estado correto
+        updateArrowVisibility();
+
+    </script>
+    <script>
+        // Função para abrir o popup do ícone de interrogação
+        function showInfoPopup(element) {
+        const popup = element.parentNode.querySelector(".info-popup");
+        if (popup) {
+            popup.style.display = "block";
+
+            // Adiciona um evento ao documento para fechar o popup ao clicar fora
+            document.addEventListener("click", closeOnOutsideClick);
+        }
+        }
+
+        // Função para fechar o popup ao clicar no botão "X"
+        function closeInfoPopup(element) {
+        const popup = element.closest(".info-popup");
+        if (popup) {
+            popup.style.display = "none";
+
+            // Remove o evento do documento ao fechar o popup
+            document.removeEventListener("click", closeOnOutsideClick);
+        }
+        }
+
+        // Função para fechar o popup ao clicar fora dele
+        function closeOnOutsideClick(event) {
+            const popups = document.querySelectorAll(".info-popup");
+            popups.forEach((popup) => {
+                if (!popup.contains(event.target) && !event.target.classList.contains("info-icon")) {
+                    popup.style.display = "none";
+                }
+            });
+        }
+
+        // Impede que o clique dentro do popup ou no ícone de interrogação feche o popup
+        document.addEventListener("click", (event) => {
+        if (event.target.closest(".info-popup") || event.target.closest(".info-icon")) {
+            event.stopPropagation();
+        }
+        });
+
+        
+        // Código original que funcionava no computador
+        document.getElementById("invest-button").addEventListener("click", function (event) {
+            event.preventDefault();
+        
+            document.querySelector(".products-grid").scrollIntoView({
+                behavior: "smooth", // Animação suave
+                block: "start", // Alinha o grid no topo da tela
+            });
+        
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,656 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a1a1a">
+    <title>Invexus - Meu Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=timeline" />
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            height: 100%;
+            width: 100%;
+            font-size: 16px;
+            background: linear-gradient(135deg, #000000, #121213); /* Degradê suave */
+            color: #e0e0e0;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+        .container {
+            min-height: 100vh;
+            max-width: 100%;
+            padding-bottom: 70px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #0e0e0e;
+            color: #B8B8BD;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+            position: sticky;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            padding-bottom: 1rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-icon {
+            font-size: 4rem;
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-card {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background-color: #1e1e1e;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .support-card, .referral-card {
+            background-color: rgba(0, 51, 102, 0.9);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .support-card h3, .referral-card h3 {
+            color: #4A90E2;
+            margin-bottom: 1rem;
+        }
+
+        .support-button {
+            display: inline-block;
+            background-color: #4A90E2;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        nav {
+            background-color: #0E0E0E;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            z-index: 9999; /* Alta prioridade para sobrepor outros elementos */
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #a0a0a0;
+            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: #B8B8BD;
+            text-shadow: 
+                0 0 1px #B8B8BD,
+                0 0 2px #B8B8BD;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        nav a {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        nav a:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        nav a:active {
+            outline: none;
+            background-color: transparent;
+        }
+        nav a, button {
+            -webkit-tap-highlight-color: transparent; /* Remove o destaque no mobile */
+            outline: none; /* Remove a borda de foco padrão */
+            user-select: none; /* Impede que o texto seja selecionado */
+        }
+        .logout-button {
+            display: inline-block;
+            color: #4A90E2; /* Azul para o texto */
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #0e0e0e; /* Fundo dos cards */
+            padding: 0.5rem 1rem;
+            border: 2px solid #4A90E2; /* Borda azul para destaque */
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            margin: 1rem auto;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            left: 16rem;
+        }
+
+        .logout-button:hover {
+            background-color: #4A90E2; /* Azul no hover */
+            color: #ffffff; /* Texto branco no hover */
+            border-color: #ffffff; /* Borda branca no hover */
+        }
+        .action-button.withdraw {
+            display: inline-block;
+            background-color: #4A90E2; /* Cor azul para o botão */
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button.withdraw:hover {
+            background-color: #0056b3; /* Azul mais escuro no hover */
+        }
+
+        .withdraw-card {
+            background-color: #1e1e1e;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+
+        .withdraw-card h3 {
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+        }
+        /* Estilo do Card Movimentos */
+        .movements-card {
+            background-color: #1e1e1e;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+
+        .movements-card h3 {
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .action-button.movements {
+            background-color: #4A90E2;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button.movements:hover {
+            background-color: #0056b3;
+        }
+
+        /* Pop-up para Movimentos */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out;
+        }
+
+        .popup-content {
+            background-color: rgba(0, 51, 102, 0.9);
+            color: #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .movements-list {
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .movement {
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .movements-icon {
+            vertical-align: middle;
+            font-size: 2.5rem; /* Aumente este valor para ajustar o tamanho */
+        }
+
+        .movement:last-child {
+            border-bottom: none;
+        }
+
+        /* Mostrar Pop-up */
+        .popup.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative; /* Necessário para o botão "X" */
+            margin-left: 18px;
+            margin-top: 40px;
+        }
+
+        .modal-content h2 {
+            color: #4A90E2;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #4A90E2;
+            border-radius: 0.5rem;
+            background-color: #000;
+            color: #e0e0e0;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-button:hover {
+            color: #4A90E2;
+        }
+
+        .save-button {
+            background-color: #4A90E2;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .save-button:hover {
+            background-color: #357ABD;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .message.success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .message.error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+        }
+
+        #successMessage {
+            position: fixed; /* Fixa a mensagem no topo da tela */
+            top: 10%; /* Ajuste para a posição desejada, por exemplo, 10% do topo */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translate(-50%, -50%); /* Centraliza o conteúdo */
+            z-index: 9999; /* Eleva sobre todos os outros elementos */
+            background-color: #4CAF50; /* Verde para indicar sucesso */
+            color: #fff; /* Texto branco */
+            padding: 15px 20px; /* Espaçamento interno */
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+            text-align: center;
+            font-size: 1rem; /* Ajuste o tamanho da fonte conforme necessário */
+            display: none; /* Começa oculta */
+        }
+
+    </style>
+</head>
+<body>   
+    <div class="container">
+        <header>
+            Invexus - Meu Perfil
+        </header>
+
+        <main>
+            <div class="profile-header">
+                <i class="fas fa-user-circle profile-icon"></i>
+                <h2 style="font-size: 1.5rem;">Mr_Cyber (ID: 719)</h2>
+            </div>
+
+            <div class="stats-card">
+                <div class="stat-item">
+                    <i class="fas fa-wallet stat-icon"></i>
+                    <div class="stat-value">R$0,00</div>
+                    <div class="stat-label">Saldo atual</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-coins stat-icon"></i>
+                    <div class="stat-value">R$0,00</div>
+                    <div class="stat-label">Renda total</div>
+                </div>
+            </div>
+
+            <div class="movements-card">
+                <h3><span class="material-symbols-outlined movements-icon">timeline</span> Movimentos</h3>
+                <p style="font-style: italic;">Veja seu histórico de movimentações financeiras:</p>
+                <button class="action-button movements" onclick="toggleMovementsPopup()">Visualizar Movimentos</button>
+            </div>
+
+            <!-- Card Pop-up para Movimentos -->
+            <div id="movements-popup" class="popup hidden">
+                <div class="popup-content">
+                    <button class="close-popup" onclick="toggleMovementsPopup()">✖</button>
+                    <h3>Movimentos Recentes</h3>
+                    <div class="movements-list">
+                                            </div>
+                </div>
+            </div>
+
+
+
+            <div class="withdraw-card">
+                <h3><i class="fas fa-money-bill"></i> Solicitar Saque</h3>
+                <p style="font-style: italic;">Retire seu saldo de forma rápida e segura:</p>
+                <a href="../saque/" class="action-button withdraw">Solicitar Saque</a>
+            </div>
+
+            <div class="modal" id="pixModal" style="display: none;">
+                <div class="modal-content">
+                    <!-- Botão de fechar com "X" -->
+                    <button class="close-button" onclick="closeModal()">&times;</button>
+                    <h2>Cadastrar Chave PIX</h2>
+                    <form id="pixForm" method="POST">
+                        <div class="input-group">
+                            <label for="fullName">Nome Completo:</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Digite seu nome completo" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="cpf">CPF:</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" pattern="\d{11}" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="pixType">Tipo de Chave PIX:</label>
+                            <select id="pixType" name="pixType" required>
+                                <option value="">Selecione</option>
+                                <option value="cpf">CPF</option>
+                                <option value="email">E-mail</option>
+                                <option value="telefone">Telefone</option>
+                                <option value="aleatoria">Chave Aleatória</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="pixKey">Chave PIX:</label>
+                            <input type="text" id="pixKey" name="pixKey" placeholder="Digite sua chave PIX" required>
+                        </div>
+                        <button type="submit" class="save-button">Salvar Chave PIX</button>
+                    </form>
+
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const pixType = document.getElementById("pixType");
+                    const pixKeyInput = document.getElementById("pixKey");
+            
+                    pixType.addEventListener("change", function () {
+                        if (pixType.value === "telefone") {
+                            if (!pixKeyInput.value.startsWith("+55")) {
+                                pixKeyInput.value = "+55";
+                            }
+                            pixKeyInput.setAttribute("placeholder", "Digite o número com DDD (ex: +5511999999999)");
+                        } else {
+                            pixKeyInput.value = ""; // Limpa o campo
+                            pixKeyInput.setAttribute("placeholder", "Digite sua chave PIX");
+                        }
+                    });
+            
+                    pixKeyInput.addEventListener("input", function () {
+                        if (pixType.value === "telefone" && !pixKeyInput.value.startsWith("+55")) {
+                            pixKeyInput.value = "+55" + pixKeyInput.value.replace(/^\+55/, '');
+                        }
+                    });
+                });
+            </script>
+
+             <a href="logout.php" class="logout-button">Sair</a>
+        </main>
+        <nav>
+            <a href="inicio.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="produtos.html" class="nav-item">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Produto</span>
+            </a>
+            <a href="equipe.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Equipe</span>
+            </a>
+            <a href="" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function toggleMovementsPopup() {
+            const popup = document.getElementById("movements-popup");
+            popup.classList.toggle("visible");
+        }
+        // Exibir ou esconder o modal
+        function togglePixModal() {
+            const modal = document.getElementById("pixModal");
+            modal.style.display = modal.style.display === "none" ? "block" : "none";
+        }
+
+        // Verificar se o usuário tem uma chave PIX cadastrada
+        function checkPixKeyAndProceed() {
+            const hasPixKey = false; 
+        // Exemplo de verificação no servidor
+
+            if (!hasPixKey) {
+                togglePixModal(); // Exibe o modal
+            } else {
+                // Redireciona para a tela de saque
+                window.location.href = "../saque/";
+            }
+        }
+
+        // Ação no botão de solicitar saque
+        document.querySelector(".action-button.withdraw").addEventListener("click", function (e) {
+            e.preventDefault();
+            checkPixKeyAndProceed();
+        });
+                function closeModal() {
+                // Seleciona o card/modal que precisa ser fechado
+                const pixCard = document.getElementById("pixModal");
+
+                // Verifica se o elemento existe antes de tentar fechar
+                if (pixCard) {
+                    pixCard.style.display = "none"; // Oculta o card
+                } else {
+                    console.error("Elemento 'pixModal' não foi encontrado.");
+                }
+            }
+
+            function closeModalAndRedirect() {
+                const modal = document.querySelector(".modal");
+                modal.style.display = "none";
+                setTimeout(() => {
+                    window.location.href = "../saque/";
+                }); 
+            }
+
+            const exibirModalPix = false;
+
+            // Abrir o modal automaticamente se exibirModalPix for true
+            if (exibirModalPix) {
+                document.addEventListener("DOMContentLoaded", function () {
+                    togglePixModal(); // Exibe o modal
+                });
+            }
+    </script>
+<script>
+    // Aguarda 5 segundos e remove a notificação
+    setTimeout(function() {
+        var notificacao = document.querySelector('.notificacao');
+        if (notificacao) {
+            notificacao.remove(); // Remove o elemento do DOM
+        }
+    }, 5000); // 5 segundos
+</script>
+
+</body>
+</html>
+
+

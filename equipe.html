@@ -1,0 +1,857 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=list" />
+    
+    <title>Invexus - Equipe</title>
+    <style>
+        :root {
+            --background-color: #121212;
+            --card-background: #1e1e1e;
+            --primary-color: #4a90e2; /* Azul frio */
+            --text-color: #e0e0e0;
+            --text-muted: #b0b0b0;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            height: 100%;
+            width: 100%;
+            font-size: 16px;
+            background: linear-gradient(135deg, #000000, #121213); /* Degradê suave */
+            color: #e0e0e0;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 80px; /* Espaço extra para o nav fixo */
+        }
+        
+        header {
+            background-color: #0e0e0e; /* Cor de fundo */
+            color: #B8B8BD; /* Cor do texto */
+            text-align: center;
+            padding: 1rem; /* Espaçamento interno */
+            font-size: 1.2rem;
+            font-weight: 400;
+            text-transform: capitalize;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opcional */
+            margin: 0; /* Remove margens */
+            width: 100%;
+            border: none; /* Remove qualquer borda */
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: left; /* Alinha o texto à esquerda */
+        }
+
+        .card .details {
+            display: none;
+            margin-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+        }
+
+        .card .toggle-btn {
+            position: absolute;
+            top: 5px;
+            right: 2px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: none;
+            padding: 10px;
+            line-height: 1;
+            margin-right: 8px;
+        }
+
+        .card .toggle-btn.open {
+            transform: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+        }
+
+        table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        table td {
+            color: var(--text-color);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: #ffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            
+        }
+
+        .btn:hover {
+            background-color: #3b7bbf; /* Azul mais escuro */
+        }
+        button {
+            background-color: #4a90e2; /* Azul frio */
+            color: #fff; /* Cor do texto */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px; /* Bordas arredondadas */
+            font-size: 1rem;
+            font-family: 'Saira Condensed', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Efeito suave ao passar o mouse */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #357ABD; /* Azul mais escuro */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra ao passar o mouse */
+            transform: scale(1.05); /* Leve aumento no tamanho */
+        }
+
+        button:active {
+            transform: scale(0.95); /* Reduz o tamanho ao clicar */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reduzida */
+        }
+
+        /* Nav Styles */
+        nav {
+            background-color: #0E0E0E;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            z-index: 9999; /* Alta prioridade para sobrepor outros elementos */
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #a0a0a0;
+            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: #B8B8BD;
+            text-shadow: 
+                0 0 1px #B8B8BD,
+                0 0 2px #B8B8BD;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        nav a {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        nav a:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        nav a:active {
+            outline: none;
+            background-color: transparent;
+        }
+        nav a, button {
+            -webkit-tap-highlight-color: transparent; /* Remove o destaque no mobile */
+            outline: none; /* Remove a borda de foco padrão */
+            user-select: none; /* Impede que o texto seja selecionado */
+        }
+
+        .card-nivel {
+            background-color: #2a2a2a; /* Cor mais clara */
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-nivel:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-nivel h3 {
+            font-size: 1rem;
+            margin: 0 0 10px;
+            color: #4a90e2; /* Azul frio */
+        }
+
+        .card-nivel p {
+            margin: 0 0 10px;
+            color: #b0b0b0; /* Texto secundário */
+        }
+
+        .card-nivel .toggle-btn {
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .card-nivel .toggle-btn:hover {
+            background-color: #3b7cca;
+        }
+        .toggle-btn-blue {
+            background-color: #4a90e2; /* Fundo azul */
+            color: #fff; /* Ícone branco */
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-btn-blue:hover {
+            background-color: #3b7cca; /* Azul mais escuro no hover */
+        }
+
+        .toggle-btn-blue .material-symbols-outlined {
+            font-size: 1.2rem;
+        }
+        .empty-message {
+            text-align: center;
+            color: #b0b0b0;
+            font-size: 1rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        #summary-menu {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #1e1e1e;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .summary-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .summary-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .summary-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        #summary-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #ccc;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+
+            /* Adiciona a seta para baixo */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZD0iTTggMTBsLTYtNkgxNGwtNiA2eiIgZmlsbD0iI2NjYyIvPjwvc3ZnPg==');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            transition: transform 0.3s ease; /* Animação de rotação */
+        }
+
+        #summary-select.open {
+            /* Rotaciona a seta para cima */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZD0iTTggNmw2IDZIMnptMCAwWiIgZmlsbD0iI2NjYyIvPjwvc3ZnPg==');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
+
+        #summary-details {
+            margin-top: 10px; /* Espaço entre o select e o conteúdo */
+            padding: 10px; /* Espaço interno */
+            border: 1px solid #444; /* Borda sutil */
+            border-radius: 5px; /* Bordas arredondadas */
+            background-color: #1a1a1a; /* Cor de fundo para combinar com o tema */
+            color: #ccc; /* Cor do texto */
+            text-align: center; /* Centraliza o texto */
+        }
+        .empty-message {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        /* Ajuste específico para botões em cards menores */
+        .toggle-btn-secondary {
+            width: 40px; /* Largura do botão */
+            height: 40px; /* Altura do botão */
+            font-size: 14px; /* Tamanho do ícone ou texto */
+            padding: 5px; /* Espaçamento interno */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #4a90e2; /* Ajuste conforme necessário */
+            border: none;
+            border-radius: 5px; /* Bordas arredondadas */
+            cursor: pointer;
+            margin-left: 205px;
+            margin-top: -65px;
+        }
+
+        .toggle-btn-secondary:hover {
+            background-color: #3b7cca;
+        }
+
+        .card .toggle-btn-secondary {
+
+            bottom: 15px; /* Ajusta a posição do botão */
+            right: 15px; /* Ajusta a posição do botão */
+        }
+        .details table {
+            width: 100%; /* Faz a tabela ocupar a largura completa */
+            border-collapse: collapse; /* Remove espaçamento entre as bordas */
+            margin-top: 10px; /* Adiciona espaçamento entre o título e a tabela */
+        }
+
+        .details th, .details td {
+            text-align: center; /* Centraliza o texto */
+            padding: 10px; /* Adiciona espaçamento interno */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Adiciona borda suave */
+            font-size: 14px; /* Tamanho da fonte ajustado */
+            color: #fff; /* Cor do texto */
+        }
+
+        .details th {
+            background-color: #4a90e2;; /* Fundo diferenciado para cabeçalho */
+            font-weight: bold; /* Negrito no cabeçalho */
+        }
+
+        .details td {
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo diferenciado para células */
+        }
+
+        .details {
+            display: block; /* Garante que ela seja visível */
+            overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+        }
+        /* Estilo para o alerta customizado */
+        .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0e0e0e; /* Cor de fundo */
+            color: #fff; /* Cor do texto */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+            width: 90%;
+            margin-top: -190px;
+        }
+
+        .custom-alert p {
+            margin: 0 0 15px;
+            font-size: 16px;
+        }
+
+        .custom-alert button {
+            padding: 5px 30px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .custom-alert button:hover {
+            background-color: #004080;
+        }
+        /* Estilos para o texto explicativo */
+        .comissoes-explicacao {
+            background-color: #1f1f1f;
+            color: #b0b0b0;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .comissoes-explicacao .titulo-explicacao {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4a90e2; /* Destaque na cor do título */
+        }
+
+        .comissoes-explicacao h3 {
+            font-size: 1.1rem;
+            margin-top: 15px;
+            color: #4a90e2; /* Destaque nos subtítulos */
+        }
+
+        .comissoes-explicacao p {
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .comissoes-explicacao strong {
+            color: #4a90e2;
+        }
+
+        .comissoes-explicacao em {
+            font-style: italic;
+            color: #b5b5b5;
+        }
+        .paragrafo-com-espaco {
+            margin-bottom: 1em;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            Invexus - Minha Equipe
+        </header>
+
+
+        <!-- Link de Indicação -->
+        <div class="card">
+            <h2>🔗Link de Indicação</h2>
+            <p>Seu código de indicação: 
+                <strong id="codigoIndicacao">
+                    https://invexus.store/cadastro/?ref=6772eec7                </strong>
+            </p>
+            <div style="display: flex; justify-content: center;">
+                <button class="btn" onclick="copiarLink()">Copiar Link</button>
+            </div>
+        </div>
+
+        <!-- Alerta Customizado -->
+        <div id="customAlert" class="custom-alert" style="display: none;">
+            <p id="alertMessage">Texto do alerta</p>
+            <button onclick="closeAlert()">OK</button>
+        </div>
+
+        <!-- Afiliados por Nível -->
+            <div class="card">
+                <h2>👥🔗 Equipe (Rede)</h2>
+                <div class="grid">
+                     <!-- O JavaScript vai injetar os cards aqui -->
+                </div>
+            </div>
+
+        <!-- Comissões de Adesão -->
+        <div id="bonus" class="summary-card" style="display: none;">               
+            <div class="card">
+                <h2>🌟Bônus de Indicação</h2>
+                <p>Total: R$ 0,00</p>
+                <button class="toggle-btn-secondary" onclick="toggleDetails(this)">
+                    <span class="material-symbols-outlined">list</span>
+                </button>
+
+                <div class="details" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nível</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+            <!-- Comissões de Rendimentos -->
+        <div id="rendimentos" class="summary-card" style="display: none;">             
+            <div class="card">
+                <h2>📊Rendimentos</h2>
+                <p>Total: R$ 0,00</p>
+                <button class="toggle-btn-secondary" onclick="toggleDetails(this)">
+                    <span class="material-symbols-outlined">list</span>
+                </button>
+
+                <div class="details" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nível</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+            <!-- Histórico de Comissões -->
+        <div id="historico" class="summary-card" style="display: none;">
+            <div class="card">
+                <p>📖Histórico de Comissões</p>
+                <button class="toggle-btn-secondary" onclick="toggleDetails(this)">
+                    <span class="material-symbols-outlined">list</span>
+                </button>
+                <div class="details" style="display: none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Nível</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">📋Sumário</h2>
+            <select id="summary-select" onchange="switchSummarySection(this.value)">
+                <option value="">Selecionar</option>
+                <option value="bonus">Bônus de Indicação</option>
+                <option value="rendimentos">Rendimentos de Equipe</option>
+                <option value="historico">Histórico de Comissões</option>
+            </select>
+
+            <div id="summary-details">
+                <p class="empty-message">Selecione uma opção para visualizar os detalhes</p>
+            </div>
+
+        </div>
+
+         <!-- HTML para o texto explicativo -->
+        <div class="comissoes-explicacao">
+            <h2 class="titulo-explicacao">Como Funciona o Sistema de Comissões?</h2>
+            <p>
+                Nosso sistema de comissões é projetado para recompensar os usuários de forma justa e transparente por suas indicações e pelos rendimentos gerados pelas suas equipes. Veja abaixo como funciona:
+            </p>
+            <h3>Comissões de Adesão</h3>
+            <p>
+                Ao indicar novos membros que realizem sua primeira compra de um produto elegível, você receberá uma comissão baseada no valor investido por eles. Essa comissão é paga uma única vez, exclusivamente na primeira adesão do indicado.
+            </p>
+            <p>
+                <strong>Por exemplo:</strong><br>
+                - <strong>Indicados diretos no 1º Nível:</strong> 20% de comissão<br>
+                - <strong>Indicados no 2º Nível:</strong> 4% de comissão<br>
+                - <strong>Indicados no 3º Nível:</strong> 3% de comissão<br>
+                - <strong>Indicados no 4º Nível:</strong> 2% de comissão<br>
+                - <strong>Indicados no 5º Nível:</strong> 1% de comissão<br>
+                <em>Sem limites de lateralidade.</em>
+            </p>
+            <p>
+                Esses valores são creditados diretamente no saldo da sua conta e podem ser acompanhados em tempo real na aba de movimentações.
+            </p>
+            <h3>Comissões de Rendimento</h3>
+            <p>
+                Além das comissões de adesão, você também é recompensado pelos rendimentos diários gerados pelos produtos adquiridos pelos seus indicados. Esse sistema incentiva o crescimento sustentável de sua equipe e permite ganhos contínuos enquanto seus indicados mantêm seus produtos ativos.
+            </p>
+            <p>
+                Como funciona:<br><br>
+                - A partir do plano Advance, os rendimentos dos seus indicados diretos e indiretos geram uma porcentagem de retorno para você.<br>
+                - Essa porcentagem é baseada no nível de indicação e no valor investido por cada membro da sua equipe.<br>
+                - Alguns planos te darão mais vantagens e mais profundidade nos rendimentos de equipe. Confira mais detalhes na aba <a href="../inicio" style="color: #00b4d8; text-decoration: none;"><strong>Início</strong></a>.
+            </p>
+            <p>
+                Fique atento à aba de movimentações e acompanhe seus ganhos de forma detalhada. Nosso sistema de comissões é automático e visa incentivar sua participação e o sucesso da sua equipe!
+            </p>
+        </div>                            
+    </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById('summary-details');
+            const treeContainer = document.getElementById("tree-container");
+
+            if (container) {
+                container.innerHTML = '<p class="empty-message">Selecione uma opção para visualizar os detalhes</p>';
+            }
+            if (treeContainer) {
+                treeContainer.style.display = "none"; // Certifique-se de que a estrutura começa escondida
+            }
+        });
+
+        function switchSummarySection(section) {
+            const allSections = document.querySelectorAll('.summary-card'); // Seleciona todos os cards
+            const container = document.getElementById('summary-details'); // Contêiner principal
+
+            // Esconde todos os cards primeiro
+            allSections.forEach((sec) => {
+                sec.style.display = 'none';
+            });
+
+            // Verifica se a opção é "Selecionar"
+            if (section === "") {
+                container.innerHTML = '<p class="empty-message">Selecione uma opção para visualizar os detalhes</p>';
+                return; // Para aqui, nada mais será feito
+            }
+
+            // Caso contrário, exibe a seção correspondente
+            const selectedSection = document.getElementById(section);
+            if (selectedSection) {
+                container.innerHTML = ''; // Limpa o contêiner, mas mantém a referência
+                const clonedSection = selectedSection.cloneNode(true); // Clona o card selecionado
+                clonedSection.style.display = 'block'; // Garante que ele estará visível
+                container.appendChild(clonedSection); // Reinsere o card no contêiner
+            }
+        }
+
+        document.getElementById('summary-select').addEventListener('click', function () {
+                this.classList.toggle('open');
+        });
+
+        </script>
+    
+    <nav> 
+        <a href="inicio.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </a>
+        <a href="produtos.html" class="nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Produto</span>
+        </a>
+        <a href="" class="nav-item active">
+            <i class="fas fa-users"></i>
+            <span>Equipe</span>
+        </a>
+        <a href="perfil.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+    <script>
+        // Função para mostrar o alerta customizado
+        function showAlert(message) {
+            const customAlert = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('alertMessage');
+
+            // Definir a mensagem do alerta
+            alertMessage.innerText = message;
+
+            // Exibir o alerta
+            customAlert.style.display = 'block';
+        }
+
+        // Função para fechar o alerta customizado
+        function closeAlert() {
+            const customAlert = document.getElementById('customAlert');
+            customAlert.style.display = 'none';
+        }
+
+        // Substituir o alert na função copiarLink
+        function copiarLink() {
+            const codigoIndicacao = document.getElementById('codigoIndicacao').innerText;
+
+            if (!codigoIndicacao || codigoIndicacao === "Usuário não autenticado.") {
+                showAlert('Nenhum link válido para copiar.');
+                return;
+            }
+
+            // Copiar o texto para a área de transferência
+            navigator.clipboard.writeText(codigoIndicacao)
+                .then(() => {
+                    showAlert('Link copiado para a área de transferência!');
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar o link:', err);
+                    showAlert('Não foi possível copiar o link.');
+                });
+        }
+    </script>
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+            fetch('listar_novos_indicados.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        atualizarTabelaRede(data.dados);
+                    } else {
+                        console.error('Erro:', data.erro);
+                        mostrarMensagemSemIndicados(); // Mostra mensagem caso não tenha indicados
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                });
+        });
+
+        function atualizarTabelaRede(rede) {
+            const grid = document.querySelector('.grid');
+            grid.innerHTML = ''; // Limpa o conteúdo antes de adicionar os dados
+
+            // Define os emojis por nível
+            const emojis = {
+                1: '🥇', // 1º nível
+                2: '🥈', // 2º nível
+                3: '🥉', // 3º nível
+                4: '🏅', // 4º nível
+                5: '🏆', // 5º nível
+            };
+
+            if (Object.keys(rede).length === 0) {
+                mostrarMensagemSemIndicados(); // Mostra mensagem caso a rede esteja vazia
+                return;
+            }
+
+            Object.keys(rede).forEach(nivel => {
+                const dados = rede[nivel];
+                const card = `
+                    <div class="card card-nivel">
+                        <h3>${emojis[nivel]} Nível ${nivel} (${dados.afiliados} afiliados)</h3>
+                        <p>Total investido: R$ ${dados.ganhos.toFixed(2)}</p>
+                        <button class="toggle-btn" onclick="toggleDetails(this);">
+                            <span>list</span>
+                        </button>
+                        <div class="details" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Status</th>
+                                        <th>Valor Investido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${dados.detalhes.map(afiliado => `
+                                        <tr>
+                                            <td>${afiliado.nome}</td>
+                                            <td>${afiliado.status}</td>
+                                            <td>R$ ${afiliado.valor_investido.toFixed(2)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        function mostrarMensagemSemIndicados() {
+            const grid = document.querySelector('.grid');
+            grid.innerHTML = `
+                <p style="font-style: italic; text-align: center; color: #bbb;">
+                    Você ainda não possui indicados em sua rede.
+                </p>
+            `;
+        }
+
+        function toggleDetails(button) {
+            const details = button.nextElementSibling;
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        }
+
+</script>
+<script>
+    // Aguarda 5 segundos e remove a notificação
+    setTimeout(function() {
+        var notificacao = document.querySelector('.notificacao');
+        if (notificacao) {
+            notificacao.remove(); // Remove o elemento do DOM
+        }
+    }, 5000); // 5 segundos
+</script>
+
+        
+</body>
+</html>
